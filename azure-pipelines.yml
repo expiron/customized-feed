@@ -1,0 +1,30 @@
+
+resources:
+  repositories:
+  - repository: templates
+    type: git
+    name: CustomizedOpenWRT/pipelines-templates
+
+jobs:
+- job:
+  displayName: Build
+  pool:
+    vmImage: Ubuntu-16.04
+  timeoutInMinutes: 0
+  steps:
+  - template: steps/install-dependencies.yml@templates
+
+  - template: steps/download-artifacts.yml@templates
+    parameters:
+      itemPattern: '**/*sdk*'
+
+  - template: steps/sdk-steps.yml@templates
+    parameters:
+      customFeeds: src-link this $(Build.SourcesDirectory)
+      packages: -a -p this
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publish artifacts
+    inputs:
+      artifactName: Packages
+      pathtoPublish: $(Build.SDKRepoPath)/this
