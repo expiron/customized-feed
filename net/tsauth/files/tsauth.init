@@ -1,0 +1,36 @@
+#!/bin/sh /etc/rc.common
+#
+# Copyright (C) 2019 expiron <expiron18@gmail.com>
+#
+# This is free software, licensed under the GNU General Public License v3.
+#
+
+START=99
+USE_PROCD=1
+
+_cron_restart()
+{
+    /etc/init.d/cron restart > /dev/null
+}
+
+_add_cron_script()
+{
+    (crontab -l ; echo "$1") | sort | uniq | crontab -
+    _cron_restart
+}
+
+_rm_cron_scripts()
+{
+    crontab -l | grep -v "$1" | sort | uniq | crontab -
+    _cron_restart
+}
+
+start_service() {
+	config_load tsauth
+	config_get cron service cron "45	*/4	*	*	*"
+	_add_cron_script "$cron	tsauth-keep-online"
+}
+
+stop_service() {
+	_rm_cron_scripts "tsauth-keep-online"
+}
