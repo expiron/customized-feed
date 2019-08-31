@@ -6,6 +6,6 @@
 #
 
 [ "$ACTION" = ifup ] && [ "$INTERFACE" = wan ] && {
-  logger -t TsAuth "Tsinghua Network Authentication starts due to $ACTION of $INTERFACE ($DEVICE)"
+	logger -t TsAuth "Tsinghua Network Authentication starts due to $ACTION of $INTERFACE ($DEVICE)"
 	tsauth-keep-online self
 }

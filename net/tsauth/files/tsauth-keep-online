@@ -10,6 +10,8 @@
 
 bin="/usr/bin/tsauth"
 self="$1"
+run="$2"
+[ -n "$run" ] || run=0
 
 keep_online() {
 	local cfg="$1"
@@ -27,8 +29,8 @@ keep_online() {
 
 	options="-u $username -p $password"
 	[ "$target" = "self" ] && {
-		[ "$ipv4" = 0 ] || [ "$(curl -sI -m 10 -o /dev/null -w '%{http_code}' info.tsinghua.edu.cn)" -ne 200 ] || ipv4=0
-		[ "$ipv6" = 0 ] || [ "$(curl -sI -m 10 -o /dev/null -w '%{http_code}' bt.byr.cn)" -ne 301 ] || ipv6=0
+		[ "$ipv4" = 0 ] || [ "$(curl -sI -m 1 -o /dev/null -w '%{http_code}' info.tsinghua.edu.cn)" -ne 200 ] || ipv4=0
+		[ "$ipv6" = 0 ] || [ "$(curl -sI -m 1 -o /dev/null -w '%{http_code}' bt.byr.cn)" -ne 301 ] || ipv6=0
 	}
 	[ "$ipv4" = 0 ] && [ "$ipv6" = 0 ] && return
 	[ -z "$self" ] || [ "$target" = "$self" ] || return
@@ -38,6 +40,10 @@ keep_online() {
 	[ "$ipv6" = 0 ] || options="$options --ipv6"
 
 	echo "$options" | xargs "$bin"
+	[ "$target" = "self" ] && {
+		: $((run += 1))
+		[ "$run" -gt 3 ] || sh -c "sleep ${run}m; tsauth-keep-online self $run" &
+	}
 }
 
 validate_mklocal() {

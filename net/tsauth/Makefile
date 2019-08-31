@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=tsauth
 PKG_VERSION:=0.3.5
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/expiron/tsauth/tar.gz/v$(PKG_VERSION)?
@@ -36,6 +36,10 @@ endef
 
 define Package/tsauth/description
   A tiny client for Tsinghua network AAA (Authentication, Authorization, Accounting) system.
+endef
+
+define Package/tsauth/conffiles
+/etc/config/tsauth
 endef
 
 define Package/tsauth/install
