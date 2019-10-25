@@ -20,7 +20,9 @@ Every section has a `disabled` option to temporarily turn off the instance.
 | dscp | integer | --dscp | set DSCP(6bit) (default: 0) |
 | nocomp | boolean | --nocomp | disable compression |
 | sockbuf | integer | --sockbuf | per-socket buffer in bytes (default: 4194304) |
+| smuxver | integer | --smuxver | specify smux version, available 1,2 (default: 1) |
 | smuxbuf | integer | --smuxbuf | the overall de-mux buffer in bytes (default: 4194304) |
+| streambuf | integer | --streambuf | per stream receive buffer in bytes, for smux v2+ (default: 2097152) |
 | keepalive | integer | --keepalive | seconds between heartbeats (default: 10) |
 | snmplog | string | --snmplog | collect snmp to file, aware of timeformat in golang, like: ./snmp-20060102.log |
 | snmpperiod | integer | --snmpperiod | snmp collect period, in seconds (default: 60) |
@@ -31,7 +33,6 @@ Every section has a `disabled` option to temporarily turn off the instance.
 
 ### Limitation
 * As kcptun outputs all logs to stderr by default, you may receive lots of **LOG_ERR** level message when set syslog to 1.
-* When `syslog` or `user` changed, a restart is needed to take effect.
 
 ## [Server options](#server-options)
 | Name | Type | Option | Description |
