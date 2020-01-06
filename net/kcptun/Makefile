@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2019 expiron <expiron18@gmail.com>
+# Copyright (C) 2019-2020 expiron <expiron18@gmail.com>
 #
 # This is free software, licensed under the GNU General Public License v3.
 # See /LICENSE.md for more information.
@@ -13,7 +13,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/xtaci/kcptun/tar.gz/v${PKG_VERSION}?
-PKG_SOURCE_DATE:=2019-11-12
+PKG_SOURCE_DATE:=2020-01-03
 PKG_HASH:=620d4cd3ed1660e71b0fe1041c063e8fb38dc3aa7a6c78f6570e812566f44bb5
 
 PKG_MAINTAINER:=expiron <expiron18@gmail.com>
