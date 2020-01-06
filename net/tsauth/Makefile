@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2019 expiron <expiron18@gmail.com>
+# Copyright (C) 2019-2020 expiron <expiron18@gmail.com>
 #
 # This is free software, licensed under the GNU General Public License v3.
 # See /LICENSE.md for more information.
