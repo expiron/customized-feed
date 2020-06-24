@@ -8,13 +8,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=kcptun
-PKG_VERSION:=20200103
+PKG_VERSION:=20200409
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/xtaci/kcptun/tar.gz/v${PKG_VERSION}?
-PKG_SOURCE_DATE:=2020-01-03
-PKG_HASH:=620d4cd3ed1660e71b0fe1041c063e8fb38dc3aa7a6c78f6570e812566f44bb5
+PKG_SOURCE_DATE:=2020-04-09
+PKG_HASH:=312b8f438549225dfd1eac95444dd6a4c50610578ddcf7ff21e19c73a855d4bc
 
 PKG_MAINTAINER:=expiron <expiron18@gmail.com>
 PKG_LICENSE:=MIT
@@ -38,6 +38,10 @@ define Package/kcptun-config
   SUBMENU:=Web Servers/Proxies
   TITLE:=Kcptun Config Scripts
   URL:=https://github.com/xtaci/kcptun
+endef
+
+define Package/kcptun-config/conffiles
+/etc/config/kcptun
 endef
 
 define Package/kcptun-config/install
