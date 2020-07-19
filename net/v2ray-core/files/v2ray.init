@@ -1,0 +1,66 @@
+#!/bin/sh /etc/rc.common
+#
+# Copyright (C) 2020 expiron <expiron18@gmail.com>
+#
+# This is free software, licensed under the GNU General Public License v3.
+#
+
+USE_PROCD=1
+START=99
+
+bindir=/usr/bin/v2ray
+
+v2ray() {
+	local cfg="$1"
+	local bin="$bindir/v2ray"
+
+	[ -x "$bin" ] || return
+	eval "$("validate_v2ray_section" "$cfg" validate_mklocal)"
+	"validate_v2ray_section" "$cfg" || return
+	[ "$disabled" = 0 ] || return
+
+	procd_open_instance "v2ray.$cfg"
+	procd_set_param command "$bin" -c "$config"
+	[ -z "$syslog" ] || procd_set_param stdout 1
+	[ -z "$syslog" ] || procd_set_param stderr 1
+	procd_set_param file "$config"
+	procd_set_param respawn
+	procd_close_instance
+}
+
+start_service() {
+	config_load v2ray
+	config_foreach v2ray v2ray
+}
+
+service_triggers() {
+	procd_add_reload_interface_trigger wan
+	procd_add_reload_trigger v2ray
+	procd_open_validate
+	validate_v2ray_section
+	procd_close_validate
+}
+
+validate_mklocal() {
+	local tuple opts
+
+	shift 2
+	for tuple in "$@"; do
+		opts="${tuple%%:*} $opts"
+	done
+	[ -z "$opts" ] || echo "local $opts"
+}
+
+validate() {
+	uci_validate_section v2ray "$@"
+}
+
+validate_v2ray_section() {
+	local cfg="$1"; shift
+	local func="$1"; shift
+
+	"${func:-validate}" v2ray "$cfg" "$@" \
+		'disabled:bool:0' \
+		'config:file' \
+		'syslog:bool:1'
+}
