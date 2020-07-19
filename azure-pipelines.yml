@@ -7,16 +7,30 @@ resources:
 
 jobs:
 - job:
-  displayName: Build
+  displayName: Build for
   pool:
     vmImage: Ubuntu-Latest
+  strategy:
+    matrix:
+      ath79:
+        BuildTarget: ath79
+        BuildSubtarget: generic
+      ipq806x:
+        BuildTarget: ipq806x
+        BuildSubtarget: generic
+      x86_64:
+        BuildTarget: x86
+        BuildSubtarget: '64'
+    maxParallel: 3
   timeoutInMinutes: 0
   steps:
   - template: steps/install-dependencies.yml@templates
 
-  - template: steps/download-artifacts.yml@templates
+  - template: steps/download-online-artifacts.yml@templates
     parameters:
-      itemPattern: '**/*sdk*'
+      target: $(BuildTarget)
+      subtarget: $(BuildSubtarget)
+      patterns: '*(sdk)*\.tar\.xz'
 
   - template: steps/sdk-steps.yml@templates
     parameters:
