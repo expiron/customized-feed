@@ -29,15 +29,13 @@ keep_online() {
 
 	options="-u $username -p $password"
 	[ "$target" = "self" ] && {
-		[ "$ipv4" = 0 ] || [ "$(curl -sI -m 1 -o /dev/null -w '%{http_code}' info.tsinghua.edu.cn)" -ne 200 ] || ipv4=0
-		[ "$ipv6" = 0 ] || [ "$(curl -sI -m 1 -o /dev/null -w '%{http_code}' bt.byr.cn)" -ne 301 ] || ipv6=0
+		[ "$(curl -sI -m 1 -o /dev/null -w '%{http_code}' info.tsinghua.edu.cn)" -ne 200 ] || local ipv4=0
+		[ "$(curl -sI -m 1 -o /dev/null -w '%{http_code}' bt.byr.cn)" -ne 301 ] || local ipv6=0
 	}
 	[ "$ipv4" = 0 ] && [ "$ipv6" = 0 ] && return
 	[ -z "$self" ] || [ "$target" = "$self" ] || return
 	[ "$target" = "self" ] || options="$options -d $target"
 	[ "$inside" = 0 ] || options="$options --inside"
-	[ "$ipv4" = 0 ] || options="$options --ipv4"
-	[ "$ipv6" = 0 ] || options="$options --ipv6"
 
 	echo "$options" | xargs "$bin"
 	[ "$target" = "self" ] && {
@@ -78,9 +76,7 @@ validate_online_options() {
 		'disabled:bool:0' \
 		'account:uci("tsauth", "@account")' \
 		'target:ipaddr:self' \
-		'inside:bool:0' \
-		'ipv4:bool:1' \
-		'ipv6:bool:1'
+		'inside:bool:0'
 }
 
 config_load tsauth
