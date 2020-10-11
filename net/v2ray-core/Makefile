@@ -8,13 +8,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=v2ray-core
-PKG_VERSION:=4.26.0
+PKG_VERSION:=4.31.0
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/v2ray/v2ray-core/tar.gz/v${PKG_VERSION}?
-PKG_SOURCE_DATE:=2020-07-08
-PKG_HASH:=b2c80d0f7935d33e922ecceaed980ddd1a8aa332f57f6a8b1840fae6e37e98cb
+PKG_SOURCE_DATE:=2020-10-11
+PKG_HASH:=4e475c700863320b92689cb36ef993133e9c799375bbfc4a2811da2283c3673f
 
 PKG_MAINTAINER:=expiron <expiron18@gmail.com>
 PKG_LICENSE:=MIT
@@ -27,7 +27,7 @@ PKG_USE_MIPS16:=0
 GO_PKG:=v2ray.com/core
 
 GO_PKG_LDFLAGS:=-s -w
-GO_PKG_LDFLAGS_X:=v2ray.com/core.codename=user v2ray.com/core.build=$(shell date '+%Y%m%d-%H%M%S') v2ray.com/core.version=$(PKG_VERSION)
+GO_PKG_LDFLAGS_X:=v2ray.codename=user v2ray.build=$(shell date '+%Y%m%d-%H%M%S') v2ray.version=$(PKG_VERSION)
 
 include $(INCLUDE_DIR)/package.mk
 include $(TOPDIR)/feeds/packages/lang/golang/golang-package.mk
